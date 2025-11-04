@@ -1,4 +1,4 @@
-from flask import Flask
+from flask import Flask, request, jsonify, render_template
 import psycopg2
 from dotenv import load_dotenv
 import os
@@ -16,6 +16,11 @@ CONNECTION_STRING = os.getenv("CONNECTION_STRING")
 
 app = Flask(__name__)
 
+def get_connection():
+    connection = psycopg2.connect(CONNECTION_STRING)
+    print("Connection successful!")
+    return connection
+
 @app.route('/')
 def home():
     return 'Hello, World!'
@@ -28,8 +33,7 @@ def about():
 def sensor():
     # Connect to the database
     try:
-        connection = psycopg2.connect(CONNECTION_STRING)
-        print("Connection successful!")
+        connection = get_connection()
         
         # Create a cursor to execute SQL queries
         cursor = connection.cursor()
@@ -55,7 +59,7 @@ def insert_sensor_value(sensor_id):
         return jsonify({"error": "Missing 'value' query parameter"}), 400
 
     try:
-        conn = psycopg2.connect(CONNECTION_STRING)
+        conn = get_connection()
         cur = conn.cursor()
 
         # Insert into sensors table
