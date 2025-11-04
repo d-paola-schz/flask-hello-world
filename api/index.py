@@ -28,7 +28,7 @@ def about():
 def sensor():
     # Connect to the database
     try:
-        connection = psycopg2.connect("CONNECTION_STRING")
+        connection = psycopg2.connect(CONNECTION_STRING)
         print("Connection successful!")
         
         # Create a cursor to execute SQL queries
