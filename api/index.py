@@ -48,7 +48,7 @@ def sensor():
     except Exception as e:
         return f"Failed to connect: {e}"
 
-@app.route("/sensor/<int:sensor_id>", methods=["POST"])
+@app.route("/sensor/sensor_id", methods=["POST"])
 def insert_sensor_value(sensor_id):
     value = request.args.get("value", type=float)
     if value is None:
