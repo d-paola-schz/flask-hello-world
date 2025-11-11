@@ -57,31 +57,30 @@ def pagina():
     return render_template("pagina.html", user="Danna")
 
 
-@app.route("/sensor/<int:sensor_id>", methods=["POST"])
-def insert_sensor_value(sensor_id):
-    value = request.args.get("value", type=float)
-    if value is None:
-        return jsonify({"error": "Missing 'value' query parameter"}), 400
-
+@app.route("/sensor/<int:sensor_id>")
+def get_sensor(sensor_id):
     try:
         conn = get_connection()
         cur = conn.cursor()
 
-        # Insert into sensors table
-        cur.execute(
-            "INSERT INTO sensores (sensor_id, value) VALUES (%s, %s)",
-            (sensor_id, value)
-        )
-        conn.commit()
+        # Get the latest 10 values
+        cur.execute("""
+            SELECT value, created_at
+            FROM sensors
+            WHERE sensor_id = %s
+            ORDER BY created_at DESC
+            LIMIT 10;
+        """, (sensor_id,))
+        rows = cur.fetchall()
 
-        return jsonify({
-            "message": "Sensor value inserted successfully",
-            "sensor_id": sensor_id,
-            "value": value
-        }), 201
+        # Convert to lists for graph
+        values = [r[0] for r in rows][::-1]        # reverse for chronological order
+        timestamps = [r[1].strftime('%Y-%m-%d %H:%M:%S') for r in rows][::-1]
+        
+        return render_template("sensor.html", sensor_id=sensor_id, values=values, timestamps=timestamps, rows=rows)
 
-    except psycopg2.Error as e:
-        return jsonify({"error": str(e)}), 500
+    except Exception as e:
+        return f"<h3>Error: {e}</h3>"
 
     finally:
         if 'conn' in locals():
