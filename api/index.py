@@ -63,7 +63,7 @@ def dashboard():
         cur = conn.cursor() 
 
         # Obtener lista de sensores (id y nombre)
-        cur.execute("SELECT sensor_id, nombre FROM sensores;")
+        cur.execute("SELECT id, sensor_id FROM sensores;")
         sensores = cur.fetchall()
 
         cur.close()
