@@ -59,8 +59,8 @@ def pagina():
 @app.route('/dashboard')
 def dashboard():
     try:
-        connection = get_connection()
-        cursor = connection.cursor()
+        conn = get_connection()
+        cur = connection.cursor()
         # Obtener lista de sensores (id y nombre)
         cur.execute("SELECT sensor_id, nombre FROM sensores;")
         sensores = cur.fetchall()
