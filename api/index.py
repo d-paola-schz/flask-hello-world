@@ -54,7 +54,7 @@ def sensor():
 
 @app.route("/pagina")
 def pagina():
-    return render_template("pagina.html", user="Danna")
+    return render_template("pagina.html", user="User")
 
 @app.route('/dashboard')
 def dashboard():
