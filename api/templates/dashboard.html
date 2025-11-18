@@ -157,7 +157,7 @@
             <div class="form-group">
                 <label for="sensor">Choose a sensor:</label>  
                 <select name="sensor_id" id="sensor">
-                    {% for id, sensor_id in sensores | sort(attribute='1') %}
+                    {% for id, sensor_id in sensores %}
                         <option value="{{sensor_id}}">Sensor {{sensor_id}}</option>
                     {% endfor %}
                 </select>
