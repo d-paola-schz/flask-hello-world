@@ -1,18 +1,175 @@
 <!DOCTYPE html> 
 <html> 
-  <body> 
-    <h1> Sensor Dashboard </h1>
-    
-    <form onsubmit="goToSensor(); return false;"> 
-      <label for="sensor"> Choose a sensor: </label>  
-        <select name="sensor_id" id="sensor" >
-          {% for id, sensor_id in sensores %}
-            <option value="{{sensor_id}}"> Sensor {{sensor_id}}</option>
-          {% endfor %}
-      </select>
-      <br><br> 
-      <button> Submit </button> 
-    </form>
+<head>
+    <title>Sensor Dashboard</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+
+        .container {
+            background: white;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+            padding: 40px;
+            width: 100%;
+            max-width: 500px;
+            text-align: center;
+        }
+
+        h1 {
+            color: #333;
+            margin-bottom: 20px;
+            font-size: 2.2em;
+            font-weight: 600;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .form-group {
+            margin-bottom: 25px;
+            text-align: left;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 600;
+            color: #555;
+            font-size: 1.1em;
+        }
+
+        select {
+            width: 100%;
+            padding: 12px 15px;
+            border: 2px solid #e1e5ee;
+            border-radius: 8px;
+            font-size: 1em;
+            background-color: white;
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+
+        select:focus {
+            outline: none;
+            border-color: #667eea;
+            box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+        }
+
+        select:hover {
+            border-color: #667eea;
+        }
+
+        button {
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+            border: none;
+            padding: 14px 30px;
+            border-radius: 8px;
+            font-size: 1.1em;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            width: 100%;
+            box-shadow: 0 4px 15px rgba(102, 126, 234, 0.3);
+        }
+
+        button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(102, 126, 234, 0.4);
+        }
+
+        button:active {
+            transform: translateY(0);
+        }
+
+        .sensor-icon {
+            font-size: 3em;
+            margin-bottom: 20px;
+            color: #667eea;
+        }
+
+        .instructions {
+            margin-top: 25px;
+            padding: 15px;
+            background-color: #f8f9fa;
+            border-radius: 8px;
+            border-left: 4px solid #667eea;
+            text-align: left;
+        }
+
+        .instructions p {
+            color: #666;
+            font-size: 0.9em;
+            margin: 0;
+        }
+
+        /* Animación de carga */
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .container {
+            animation: fadeIn 0.6s ease-out;
+        }
+
+        /* Responsive */
+        @media (max-width: 600px) {
+            .container {
+                padding: 30px 20px;
+                margin: 10px;
+            }
+            
+            h1 {
+                font-size: 1.8em;
+            }
+        }
+    </style>
+</head>
+<body> 
+    <div class="container">
+        <div class="sensor-icon">📊</div>
+        <h1>Sensor Dashboard</h1>
+        
+        <form onsubmit="goToSensor(); return false;"> 
+            <div class="form-group">
+                <label for="sensor">Choose a sensor:</label>  
+                <select name="sensor_id" id="sensor">
+                    {% for id, sensor_id in sensores %}
+                        <option value="{{sensor_id}}">Sensor {{sensor_id}}</option>
+                    {% endfor %}
+                </select>
+            </div>
+            
+            <button type="submit">View Sensor Data</button> 
+        </form>
+
+        <div class="instructions">
+            <p>Select a sensor from the dropdown menu and click "View Sensor Data" to see detailed information and analytics.</p>
+        </div>
+    </div>
 
     <script>
         function goToSensor() {
@@ -20,13 +177,20 @@
             const sensorId = document.getElementById("sensor").value; 
             
             if (sensorId) {
-                location.href = "/sensor/" + sensorId;
+                // Agregar efecto de carga
+                const button = document.querySelector('button');
+                button.innerHTML = 'Loading...';
+                button.disabled = true;
+                
+                setTimeout(() => {
+                    location.href = "/sensor/" + sensorId;
+                }, 500);
             } else {
-                alert("Por favor selecciona un sensor.");
+                alert("Please select a sensor.");
             }
         }
     </script>
-  </body>
+</body>
 </html>
 
 
