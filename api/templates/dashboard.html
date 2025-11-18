@@ -4,7 +4,7 @@
     <h1> The select element </h1>
     <p> The select element is used to create a drop-down list. </p>
     
-    <form onsubmit="goToSensor();"> 
+    <form onsubmit="goToSensor(); return false;"> 
       <label for="sensor"> Choose a sensor: </label>  
         <select name="sensor_id" id="sensor" >
           {% for id, sensor_id in sensores %}
