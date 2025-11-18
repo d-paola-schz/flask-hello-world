@@ -3,8 +3,9 @@
   <body> 
     <h1> The select element </h1>
     <p> The select element is used to create a drop-down list. </p>
-    <form action= /sensor/<int:sensor_id>>  
-      <label for="sensor"> Choose a car: </label>
+    
+    <form onsubmit="goToSensor(); return false;"> 
+      <label for="sensor"> Choose a sensor: </label>  
         <select name="sensor_id" id="sensor_id" >
           {% for id, sensor_id in sensores %}
             <option value="{{sensor_id}}"> Sensor {{sensor_id}}</option>
@@ -15,7 +16,17 @@
     </form>
 
     <p> Click the "Submit" button and the form-data will be sent to a page on the server called "action_pae.php". </p>
-  
+    <script>
+        function goToSensor() {
+            const sensorId = document.getElementById("sensor_id").value; 
+            
+            if (sensorId) {
+                location.href = "/sensor/" + sensorId;
+            } else {
+                alert("Por favor selecciona un sensor.");
+            }
+        }
+    </script>
   </body>
 </html>
 
