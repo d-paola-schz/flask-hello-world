@@ -6,7 +6,7 @@
     
     <form onsubmit="goToSensor(); return false;"> 
       <label for="sensor"> Choose a sensor: </label>  
-        <select name="sensor_id" id="sensor_id" >
+        <select name="sensor_id" id="sensor" >
           {% for id, sensor_id in sensores %}
             <option value="{{sensor_id}}"> Sensor {{sensor_id}}</option>
           {% endfor %}
