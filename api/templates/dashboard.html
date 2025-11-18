@@ -3,13 +3,12 @@
   <body> 
     <h1> The select element </h1>
     <p> The select element is used to create a drop-down list. </p>
-    <form action= /sensor/<int:sensores.sensor_id>  
-      <label for="sensores"> Choose a car: </label>
-        <select name="cars" id="sensores" >
-        <option value="volvo"> sensores.sensores_id</option>
-        <option value="saab"> Saab </option>
-        <option value="opel"> Opel </option>
-        <option value="audi"> Audi </option>
+    <form action= /sensor/>  
+      <label for="sensor"> Choose a car: </label>
+        <select name="sensor_id" id="sensor_id" >
+          {% for id, sensor_id in sensores %}
+            <option value="{{sensor_id}}"> Sensor {{sensor_id}}</option>
+          {% endfor %}
       </select>
       <br><br> 
       <input type="sumbit" value="Submit"> 
