@@ -1,8 +1,7 @@
 <!DOCTYPE html> 
 <html> 
   <body> 
-    <h1> The select element </h1>
-    <p> The select element is used to create a drop-down list. </p>
+    <h1> Sensor Dashboard </h1>
     
     <form onsubmit="goToSensor(); return false;"> 
       <label for="sensor"> Choose a sensor: </label>  
@@ -15,7 +14,6 @@
       <button> Submit </button> 
     </form>
 
-    <p> Click the "Submit" button and the form-data will be sent to a page on the server called "action_pae.php". </p>
     <script>
         function goToSensor() {
             event.preventDefault(); // Previene el envío del formulario
