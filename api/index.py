@@ -56,6 +56,23 @@ def sensor():
 def pagina():
     return render_template("pagina.html", user="Danna")
 
+@app.route('/dashboard')
+def dashboard():
+    try:
+        connection = get_connection()
+        cursor = connection.cursor()
+        # Obtener lista de sensores (id y nombre)
+        cur.execute("SELECT sensor_id, nombre FROM sensores;")
+        sensores = cur.fetchall()
+
+        cur.close()
+        conn.close()
+
+        # Renderizar template con lista de sensores
+        return render_template("dashboard.html", sensores=sensores)
+       
+    except Exception as e:
+        return f"<h3>Error: {e}</h3>"
 
 @app.route("/sensor/<int:sensor_id>")
 def get_sensor(sensor_id):
