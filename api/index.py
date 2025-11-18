@@ -60,7 +60,8 @@ def pagina():
 def dashboard():
     try:
         conn = get_connection()
-        cur = connection.cursor()
+        cur = conn.cursor() 
+
         # Obtener lista de sensores (id y nombre)
         cur.execute("SELECT sensor_id, nombre FROM sensores;")
         sensores = cur.fetchall()
